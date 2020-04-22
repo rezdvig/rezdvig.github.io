@@ -5,16 +5,15 @@ body{
 }
 
 #shapka{
-	width:100%;
 	position: relative;
-	top: 0;
+	height: 200px;
 	z-index: 100;
 	background-color: black;
+	overflow: hidden;
 }
 #shapka div{
 	width: 900px;
-	height: 200px;
-	margin: 0 auto;
+	margin:0 auto 0;
 }
 #shapka p{
 	float: left;
@@ -22,14 +21,14 @@ body{
 	color: white;
 	font-weight: 300;
 	line-height: 2.042em;
-	margin: 40px 0 0;
+	margin: 40px 0 0 0;
 	font-size: 0.8125em;
 	letter-spacing: 0.07em;
 	word-spacing: 0.7em;
 }
 #shapka img {
 	float: right;
-	margin: 55px 0 0;
+	margin: 55px 0 0 5em;
 }
 
 
@@ -71,10 +70,11 @@ body{
 }
 
 #longlist {
-	float:left;
-	width: 100%;
+	width: 730px;
+	margin: 3em auto 0;
 	padding-top: 1.5em;
 }
+/*
 #longlist article {
 	width: 730px;
 	margin: 3em auto 2em;
@@ -83,6 +83,7 @@ body{
 	width: 730px;
 	margin: 2em auto;
 }
+*/
 #longlist article h2{
 	margin-top: 3em;
 	font-size: 1.5em;

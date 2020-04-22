@@ -5,7 +5,7 @@ body{
 }
 
 #shapka{
-	position: relative;
+
 	height: 200px;
 	z-index: 100;
 	background-color: black;

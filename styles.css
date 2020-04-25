@@ -30,6 +30,12 @@ body{
 	float: right;
 	margin: 55px 0 0 5em;
 }
+#backgr{
+	position: absolute;
+	height: 200px;
+	background-color: black;
+	width: 100%;
+}
 
 
 
@@ -39,15 +45,16 @@ body{
 	width: 100%;
 	height: 5em;
 	overflow: hidden;
-	background-image: url(res/back_1.png);
+	/*background-image: url(res/back_1.png);*/
 	opacity: .95;
 	z-index: 90;
+	background-color: black;
 }
 #under_shapka ul {
 	list-style: none;
 	padding: 0;
 	margin: 0 auto;
-	width: 38em;
+	width: 40em;
 }
 #under_shapka ul li {
 	float: left;
@@ -57,69 +64,108 @@ body{
 }
 #under_shapka ul li a {
 	display: block;	
+		box-sizing: border-box;
 	color:white;
 	text-decoration: none;
 	font-size: 18px;
 	font-weight: 600;
-	margin: 0 .8em;
+	margin: 0 1.5em;
 	padding: 31px 1em;
 }
 #under_shapka ul li a img {
 	position: relative;
 	top: -4px;
 }
+#under_shapka ul li:hover {
+	outline:solid white 3px;
+}
+
+
+
+
 
 #longlist {
 	width: 730px;
 	margin: 3em auto 0;
 	padding-top: 1.5em;
 }
-/*
-#longlist article {
-	width: 730px;
-	margin: 3em auto 2em;
+#longlist article{
+	margin: 100px 0;
 }
-#longlist div.no {
-	width: 730px;
-	margin: 2em auto;
-}
-*/
 #longlist article h2{
-	margin-top: 3em;
+	margin-top: 0em;
 	font-size: 1.5em;
-	color: #6a;
+	color: #6A;
 	font-weight: 400;
 	letter-spacing: 1em;
 }
-
-
 hr {
+	clear:both;
 	color: #5a;
 	margin-bottom: 2em;
 }
 
-#contain {
-display: block;
-margin: 1em;
+.contain::before,
+.contain::after {
+  content: "";
+  display: table;
 }
-#contain div img {
-	float: left;
-	z-index:5;
+.contain::after {
+  clear: both;
+}
+.contain {
+  clear: both;
+}
+.block {
+	float:left;
+	width:340px;
+	height:300px;
 	position: relative;
-	margin: 2em 1em 3em;
+	margin: 0 25px 25px 0;
 }
-#contain div p{
+.block p{
+	box-sizing: border-box;
+	height: 50px;
+	width: 340px;
+	margin: 0;
+	padding: 0 20px 0 0;
 	position: absolute;
-	top: 100px;
+	text-align: right;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 1.8em;
+	
+	bottom: 0;
+	border-bottom: solid 2px black; 
+	border-right: solid 6px black; 
 }
-#content div {
-	width: 100%;
-	height: 5em;
-	border-style: dashed;
+.block img {
+	max-height: 300px;
+	max-width: 340px;
 }
-#content div p{
-	position: relative;
-	left: 50%;
-	font-size: 2em;
-	margin: 0.6em auto;
+#longlist p img {
+	max-height:500px;
+	max-width: 500px;
+	float: left;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -179,7 +179,7 @@ footer a:link, footer a:visited{
 #no {
 	border: solid 5px rgba(255,0,0, 0);
 	box-sizing: border-box;
-	padding: 14px 5px 15px 20px;
+	padding: 14px 5px 15px 25px;
 	animation-name: borders1;
 	animation-duration: 2s;
 	animation-timing-function: easy;

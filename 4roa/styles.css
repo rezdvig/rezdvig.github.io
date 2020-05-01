@@ -54,7 +54,7 @@ body{
 	list-style: none;
 	padding: 0;
 	margin: 0 auto;
-	width: 45em;
+	width: 42em;
 }
 #under_shapka ul li {
 	float: left;
@@ -120,8 +120,12 @@ hr {
 	float:left;
 	width:340px;
 	height:300px;
+	box-sizing: border-box;
 	position: relative;
+	padding: 10px 0 0;
 	margin: 0 25px 25px 0;
+	border-bottom: solid 6px black; 
+	border-right: solid 6px black; 
 }
 .block p{
 	box-sizing: border-box;
@@ -130,28 +134,68 @@ hr {
 	margin: 0;
 	padding: 0 20px 0 0;
 	position: absolute;
+	bottom:0;
 	text-align: right;
 	font-style: italic;
 	font-weight: bold;
 	font-size: 1.8em;
-	
-	bottom: 0;
-	border-bottom: solid 2px black; 
-	border-right: solid 6px black; 
 }
 .block img {
-	max-height: 300px;
-	max-width: 340px;
+	max-height: 100%;
+	max-width: 100%;
 }
 #longlist p img {
-	max-height:500px;
-	max-width: 500px;
-	float: left;
+	max-height:450px;
+	max-width: 450px;
+	vertical-align:top;
+	margin: 10px;
+	display:inline-block;
+}
+a:link, a:visited{
+	color:black;
+	text-decoration: none;
+	font-style: italic;
+}
+a:hover{
+	text-decoration: underline;
+}
+footer {
+	width: 100%;
+	padding:1.5em 0;
+	margin: 5em 0 0;
+	background-color: black;
+	text-align:center;
+	color:white;
+	font-weight: 100;
+	font-size: .93em;
+}
+footer a:link, footer a:visited{
+	color:white;
+}
+#fot{
+	font-size: .86em;
 }
 
+#no {
+	border: solid 5px rgba(255,0,0, 0);
+	box-sizing: border-box;
+	padding: 14px 5px 15px 20px;
+	animation-name: borders1;
+	animation-duration: 2s;
+	animation-timing-function: easy;
+	transition-property: border-color;
+	transition-duration: .5s;
+}
 
+#no:hover {
+	border-color:red;
+}
 
-
+@keyframes borders1{
+	0%  {border-color: rgba(255,0,0,1);}
+	25%  {border-color: rgba(255,0,0,.9);}
+	100%  {border-color: rgba(255,0,0,0);}
+}
 
 
 

@@ -1,0 +1,107 @@
+body{
+	font-family: "Proxima Nova", Roboto, sans-serif;
+	font-size: 16px;
+	margin: 0;
+	background-color: #dad4da;
+	background: -moz-linear-gradient(top, white 120px, #dad4da 100%);
+	background: -webkit-linear-gradient(top, white 120px, #dad4da 100%);
+	  background: -webkit-gradient(linear, left top, left bottom, color-stop(120px,#dad4da),color-stop(100%,#dad4da));
+	background: -o-linear-gradient(top, white 120px, #dad4da 100%);
+	background: linear-gradient(top, white 120px, #dad4da 100%);
+	background-repeat: repeat-x;
+	background-attachment: fixed;
+}
+
+h2 {
+	font-style: italic;
+	font-size: 50px;
+	margin-top: 35px;
+}
+
+ul{
+	list-style-type: none;
+}
+
+#head {
+	width: 100%;
+}
+#head a {
+	display: block;
+	background-image: url(img/logo_2.png), url(img/logo_1.png);
+	background-repeat: no-repeat;
+	background-position: center 25%;
+	width: 545px;
+	height: 122px;
+	margin: 0 auto 80px;
+}
+
+#contain {
+	width:1162px;
+	margin:0 auto 0;
+}
+#contain div {
+	float: right;
+}
+
+
+#menu {
+	box-sizing: border-box;
+	width: 386px;
+	height: 386px;
+	background-color: green;
+	background: -moz-linear-gradient(bottom, #6d8836 0%, #75b03b 70%, #b8d975 100%);
+	background: -webkit-linear-gradient(bottom, #6d8836 0%, #75b03b 70%, #b8d975 100%);
+	background: -o-linear-gradient(bottom, #6d8836 0%, #75b03b 70%, #b8d975 100%);
+	background: linear-gradient(bottom, #6d8836 0%, #75b03b 70%, #b8d975 100%);
+	border-radius: 50px;
+	margin:0;
+	padding: 0 47px 0;
+	
+	text-align: right;
+	box-shadow: 0 0 40px rgba(0,0,0,0.13);
+}
+#menu h2 {
+	color: white;
+}
+#menu ul li, ul li :link, ul li :visited{
+	color: white;
+	font-size: 30px;
+	margin: 0 0 10px 0;
+	text-decoration: none;
+} 
+
+#longlist {
+	box-sizing: border-box;
+	width: 659px;
+	min-height:100%;
+	margin-right: -134px;
+	background-color: white;
+	border-radius: 50px;
+	margin-top:25px;
+	padding: 0 45px 10px;
+	box-shadow: 0 0 50px rgba(0,0,0,0.15);
+}
+#longlist h2 {
+	color: #4c8299;
+	text-align: center;
+	text-shadow: 1px 1px 1px #fff, 0 0 25px rgba(2,83,119,0.3);
+}
+#longlist article {
+	margin: 10px 0 0;
+	padding: 15px 10px 15px;
+	border-radius: 45px;
+	box-shadow: 0 0 50px rgba(0,0,0, .08);
+}
+#longlist article h3{
+	padding-left:35px;
+	font-size: 20px;
+}
+#longlist article img{
+	max-width: 559px;
+	max-height: 700px;
+}
+
+
+
+
+

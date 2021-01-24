@@ -2,6 +2,15 @@
 body {
 	font-family: 'Neucha', cursive;
 	font-size: 18px;
+	background-color: #fcf3cc;
+	
+	background-image: url(res/headwhite.png), url(res/bgwhite.png),url(res/bgblue.png);
+	background-repeat:no-repeat, repeat-x, repeat-x;
+	background-position:  center top,  2em top ,  center top 100px;
+	background-attachment: scroll,scroll,scroll;
+	/*background: 
+	#fcf3cc url(res/headwhite.png) no-repeat top scroll,
+	;*/
 }
 
 a {
@@ -15,12 +24,17 @@ a:hover {
  h1 {
 	font-size: 2em;
 }
-
+#toUp {
+	position: fixed;
+	bottom: 2em;
+	right: 2em;
+}
 
 
 
 
 /*  ТОП  */
+
 
 #phone {
 	clear: left;
@@ -68,6 +82,7 @@ width: 800px;
 
 
 
+
 #descript h1 {
 	text-align: left!important;
 }
@@ -75,7 +90,7 @@ width: 800px;
 	clear: both;
 	text-align: center;
 }
-#content img{
+.strip{
 	clear: both;
 
 	margin: 80px auto 0;
@@ -95,12 +110,16 @@ margin: 0 auto 60px;
 #descript {
 	width: 400px;
 	height: 300px;
-	float: left;
+	float: left;	
 }
 #pic {
 	width: 368px;
 	height: 300px;
 	float: right;
+}
+#pic img{
+	max-width: 368px;
+	margin: 0;
 }
 #descript .price {
 	font-size: 2em;
@@ -126,6 +145,10 @@ margin: 0 auto 60px;
 .nomain p{
 	clear: left;
 }
+.nomain img{
+	max-width: 300px; 
+	margin:25px 0;
+}
 .colums {
 	width: 300px;
 	float: left;
@@ -148,11 +171,25 @@ margin: 0 auto 60px;
 
 #delivery img {
 	float: left;
+	max-width: 350px
 }
 #delivery p {
 	margin: 50px;
 	text-align: right;
 }
+
+
+/*   НОВОСТИ   */
+
+
+#news img {
+	max-width: 350px;
+	margin: 20px auto 0;
+}
+#news {
+	text-align: center;
+}
+
 
 /*   КОНТАКТЫ   */
 
@@ -179,4 +216,4 @@ margin: 0 auto 60px;
 	margin: 15px 0 60px;
 	font-weight: bold;
 }
-/*Заебался я уже это все верстать*/
+/**/

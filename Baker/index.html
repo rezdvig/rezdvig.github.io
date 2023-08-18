@@ -141,7 +141,14 @@
 
 </div>
 
- <model-viewer src="ImageToStl.com_для сайта 2 -.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="0.71" exposure="1" shadow-softness="0.84">
+<model-viewer src="ImageToStl.com_для сайта 2 -.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="0.71" exposure="1" shadow-softness="0.84" camera-orbit="-35.57deg 93.56deg 33790m" field-of-view="20.11deg" min-camera-orbit="auto auto 33790m" min-field-of-view="20.11deg" auto-rotate>
+    <button class="Hotspot" slot="hotspot-1" data-position="-9298.405273437496m 4325.418440245339m 68.92869890478323m" data-normal="-1m 0m 0m" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Вентиляционная установка</div>
+    </button><button class="Hotspot" slot="hotspot-3" data-position="-8659.253508916947m 3799.999999999998m -2925.3446111750723m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Шумоглушитель</div>
+    </button><button class="Hotspot" slot="hotspot-4" data-position="-7452.8267800996m 7136.6904296875m -5079.086384916888m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Камера статического давления</div>
+    </button>
     <div class="progress-bar hide" slot="progress-bar">
         <div class="update-bar"></div>
     </div>
@@ -151,6 +158,8 @@
     <div id="ar-prompt">
         <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
     </div>
+</model-viewer>
+
 
 <footer>
  Все права защищены.

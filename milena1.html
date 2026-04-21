@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Приглашение в океанариум — для тебя 😼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e2b3c 0%, #2c3e50 50%, #1a2a36 100%);
+            font-family: 'Segoe UI', 'Quicksand', system-ui, 'Comic Neue', monospace, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* ----- КОТИКИ НА ФОНЕ (вместо сердечек) ----- */
+        .cat-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .cat-bg div {
+            position: absolute;
+            font-size: 2.2rem;
+            opacity: 0.25;
+            animation: floatCat 14s infinite alternate ease-in-out;
+        }
+
+        .cat-bg div:nth-child(1) { left: 5%; top: 15%; animation-duration: 18s; font-size: 3rem; }
+        .cat-bg div:nth-child(2) { right: 8%; bottom: 20%; animation-duration: 22s; font-size: 2.8rem; animation-delay: -3s; }
+        .cat-bg div:nth-child(3) { left: 15%; bottom: 10%; animation-duration: 20s; font-size: 2.2rem; opacity: 0.2; }
+        .cat-bg div:nth-child(4) { right: 20%; top: 40%; animation-duration: 25s; font-size: 3.2rem; opacity: 0.2; }
+        .cat-bg div:nth-child(5) { left: 25%; top: 70%; animation-duration: 16s; font-size: 2rem; }
+        .cat-bg div:nth-child(6) { right: 30%; bottom: 45%; animation-duration: 19s; font-size: 2.5rem; }
+
+        @keyframes floatCat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-25px) rotate(5deg); }
+        }
+
+        /* главная карточка */
+        .invitation-card {
+            background: rgba(250, 245, 235, 0.96);
+            backdrop-filter: blur(3px);
+            border-radius: 80px;
+            padding: 2rem 2rem 2.5rem;
+            max-width: 680px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 45px rgba(0, 0, 0, 0.3), 0 0 0 6px rgba(255, 215, 150, 0.7);
+            transition: all 0.3s ease;
+            z-index: 10;
+            border: 2px solid #f8e3c2;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #c44536;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 0 #ffdab9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        h1 span {
+            font-size: 2.8rem;
+        }
+
+        .question {
+            font-size: 1.9rem;
+            background: #fff0e0;
+            display: inline-block;
+            padding: 0.3rem 1.8rem;
+            border-radius: 100px;
+            margin: 15px 0 30px;
+            box-shadow: inset 0 -1px 0 #e0b38f, 0 8px 16px rgba(0,0,0,0.05);
+            color: #aa5a3a;
+            font-weight: 600;
+        }
+
+        /* зона кнопок */
+        .buttons-area {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            min-height: 110px;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .btn {
+            border: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 12px 28px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-yes {
+            background: #2a7f6e;
+            color: white;
+            text-shadow: 0 1px 2px #1e5a4c;
+            border: 2px solid #5fad9a;
+        }
+
+        .btn-yes:hover {
+            background: #1e6b5c;
+            transform: scale(1.02) translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+        }
+
+        .btn-no {
+            background: #6b3e2c;
+            color: #ffebcd;
+            border: 2px solid #b97f5c;
+            position: relative;
+            transition: transform 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+            will-change: transform;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        /* блок с котиком-настроением */
+        .cat-mood {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            background: #f9e3cf;
+            border-radius: 100px;
+            padding: 8px 20px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .cat-emoji {
+            font-size: 2.8rem;
+            transition: transform 0.15s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .cat-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #7a4a2e;
+            background: #fff0e4;
+            padding: 4px 12px;
+            border-radius: 50px;
+        }
+
+        /* подпись */
+        .footnote {
+            margin-top: 28px;
+            font-size: 0.85rem;
+            color: #b35f3a;
+            background: #ffefdf;
+            display: inline-block;
+            padding: 5px 18px;
+            border-radius: 40px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* сообщение-успех */
+        .success-message {
+            background: #fff7ed;
+            padding: 35px 20px;
+            border-radius: 65px;
+            text-align: center;
+            animation: bouncePop 0.6s ease;
+        }
+
+        .success-message h2 {
+            font-size: 2.2rem;
+            color: #d45a2b;
+            margin-bottom: 20px;
+        }
+
+        .success-message p {
+            font-size: 1.6rem;
+            color: #2c5f4e;
+            font-weight: 600;
+        }
+
+        .success-message .small-joke {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            background: #ffefe0;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            color: #aa5a3a;
+            font-weight: bold;
+        }
+
+        .seal-emoji {
+            font-size: 2.8rem;
+            animation: wobble 0.8s infinite alternate;
+        }
+
+        @keyframes bouncePop {
+            0% { transform: scale(0.8); opacity: 0; }
+            80% { transform: scale(1.02); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes wobble {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-8px); }
+        }
+
+        @media (max-width: 550px) {
+            .invitation-card { padding: 1.5rem 1.2rem 2rem; }
+            h1 { font-size: 1.9rem; }
+            .question { font-size: 1.3rem; }
+            .btn { font-size: 1.1rem; padding: 8px 18px; }
+            .cat-emoji { font-size: 2rem; }
+            .cat-mood { padding: 5px 15px; }
+        }
+
+        @media (max-width: 450px) {
+            .buttons-area { flex-direction: column; gap: 18px; }
+            .btn { width: 80%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cat-bg">
+    <div>😸</div>
+    <div>😺</div>
+    <div>😻</div>
+    <div>🐱</div>
+    <div>😼</div>
+    <div>🐈</div>
+</div>
+
+<div class="invitation-card" id="inviteCard">
+    <h1>
+        🐾 Для Андрея, meow 🐾
+        <span>🐈</span>
+    </h1>
+    <div class="question">
+        🤍 Пойдешь на свиданку? :3 🤍
+    </div>
+
+    <div class="buttons-area" id="buttonsContainer">
+        <button class="btn btn-yes" id="yesBtn">💚 Да, конечно 💚</button>
+        <button class="btn btn-no" id="noBtn">😾 Жопа не хочет 😾</button>
+    </div>
+
+    <!-- котик-настроение -->
+    <div class="cat-mood" id="catMood">
+        <div class="cat-emoji" id="catEmoji">😺</div>
+        <div class="cat-text" id="catText">добрый котик</div>
+    </div>
+
+    <div class="footnote">
+        🐟 (Попробуй навести на правую кнопку... котик звереет) 🐟
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Элементы
+        const yesButton = document.getElementById('yesBtn');
+        const noButton = document.getElementById('noBtn');
+        const card = document.getElementById('inviteCard');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+        const catEmoji = document.getElementById('catEmoji');
+        const catText = document.getElementById('catText');
+
+        let isYesClicked = false;         // режим "согласился"
+        let originalRect = null;
+        let windowWidth = window.innerWidth;
+        let windowHeight = window.innerHeight;
+
+        // ----- Функции для злого / доброго котика -----
+        function setAngryCat() {
+            if (isYesClicked) return;
+            catEmoji.innerHTML = '😾';
+            catEmoji.style.transform = 'scale(1.1)';
+            catText.innerHTML = 'злющий котик!!! 🐾';
+            catMood.style.background = '#f7d9c4';
+        }
+
+        function setNiceCat() {
+            if (isYesClicked) return;
+            catEmoji.innerHTML = '😺';
+            catEmoji.style.transform = 'scale(1)';
+            catText.innerHTML = 'добрый котик';
+            catMood.style.background = '#f9e3cf';
+        }
+
+        // ----- Механика убегающей кнопки (как раньше, но с котиком) -----
+        function getOriginalBoundingRect() {
+            if (!noButton) return null;
+            const currentTransform = noButton.style.transform;
+            noButton.style.transform = 'none';
+            const rect = noButton.getBoundingClientRect();
+            noButton.style.transform = currentTransform;
+            return rect;
+        }
+
+        function updateOriginalRect() {
+            if (!noButton || isYesClicked) return;
+            const currentTransform = noButton.style.transform;
+            noButton.style.transform = 'none';
+            originalRect = noButton.getBoundingClientRect();
+            noButton.style.transform = currentTransform;
+            windowWidth = window.innerWidth;
+            windowHeight = window.innerHeight;
+        }
+
+        function getSafeTranslation() {
+            if (!originalRect) updateOriginalRect();
+            if (!originalRect) return { dx: 0, dy: 0 };
+
+            const btnWidth = noButton.offsetWidth;
+            const btnHeight = noButton.offsetHeight;
+            const leftOrig = originalRect.left;
+            const rightOrig = originalRect.right;
+            const topOrig = originalRect.top;
+            const bottomOrig = originalRect.bottom;
+
+            const minXOffset = 8 - leftOrig;
+            const maxXOffset = (windowWidth - 8) - rightOrig;
+            const minYOffset = 8 - topOrig;
+            const maxYOffset = (windowHeight - 8) - bottomOrig;
+
+            let rangeXmin = Math.max(-180, minXOffset);
+            let rangeXmax = Math.min(180, maxXOffset);
+            let rangeYmin = Math.max(-120, minYOffset);
+            let rangeYmax = Math.min(120, maxYOffset);
+
+            if (rangeXmax - rangeXmin < 20) {
+                rangeXmin = -70;
+                rangeXmax = 70;
+                if (rangeXmin + leftOrig < 5) rangeXmin = 5 - leftOrig;
+                if (rangeXmax + rightOrig > windowWidth - 5) rangeXmax = windowWidth - 5 - rightOrig;
+            }
+            if (rangeYmax - rangeYmin < 20) {
+                rangeYmin = -60;
+                rangeYmax = 60;
+                if (rangeYmin + topOrig < 5) rangeYmin = 5 - topOrig;
+                if (rangeYmax + bottomOrig > windowHeight - 5) rangeYmax = windowHeight - 5 - bottomOrig;
+            }
+
+            let dx = Math.floor(Math.random() * (rangeXmax - rangeXmin + 1) + rangeXmin);
+            let dy = Math.floor(Math.random() * (rangeYmax - rangeYmin + 1) + rangeYmin);
+
+            if (Math.random() > 0.4) {
+                const strongX = (Math.random() > 0.5 ? rangeXmax * 0.8 : rangeXmin * 0.8);
+                const strongY = (Math.random() > 0.5 ? rangeYmax * 0.8 : rangeYmin * 0.8);
+                dx = Math.floor(Math.random() > 0.6 ? strongX : dx);
+                dy = Math.floor(Math.random() > 0.6 ? strongY : dy);
+            }
+
+            dx = Math.min(rangeXmax, Math.max(rangeXmin, dx));
+            dy = Math.min(rangeYmax, Math.max(rangeYmin, dy));
+            return { dx, dy };
+        }
+
+        function makeNoButtonEscape() {
+            if (isYesClicked) return false;
+            if (!noButton) return false;
+            updateOriginalRect();
+            const { dx, dy } = getSafeTranslation();
+            noButton.style.transform = `translate(${dx}px, ${dy}px)`;
+            return true;
+        }
+
+        function resetNoButtonPosition() {
+            if (isYesClicked) return;
+            noButton.style.transform = 'none';
+            updateOriginalRect();
+        }
+
+        // ----- Обработчики для кнопки "Жопа не хочет" -----
+        function onNoButtonHoverStart() {
+            if (isYesClicked) return;
+            setAngryCat();
+            makeNoButtonEscape(); // убегает при наведении
+        }
+
+        function onNoButtonHoverEnd() {
+            if (isYesClicked) return;
+            setNiceCat();
+            // позицию не сбрасываем, пусть остается где убежала (дразнилка)
+        }
+
+        // При попытке клика – убегаем сильнее и показываем ярость
+        function onNoButtonClick(e) {
+            if (isYesClicked) return;
+            e.preventDefault();
+            e.stopPropagation();
+            setAngryCat();
+            // дополнительный рывок
+            makeNoButtonEscape();
+            // вибро для смеха
+            if (navigator.vibrate) navigator.vibrate(50);
+            // меняем текст кнопки на мгновение (паника)
+            const originalText = noButton.innerHTML;
+            noButton.innerHTML = '😤 НЕ ПОЙМАЕШЬ! 😤';
+            setTimeout(() => {
+                if (!isYesClicked) noButton.innerHTML = originalText;
+            }, 400);
+            // через 1.5 секунды вернуть доброго котика, если мышь не на кнопке
+            setTimeout(() => {
+                if (!isYesClicked && !noButton.matches(':hover')) {
+                    setNiceCat();
+                }
+            }, 800);
+            return false;
+        }
+
+        // ---- Кнопка "ДА" - согласие, океанариум, тюлени и "ты все равно жопа" ----
+        yesButton.addEventListener('click', function(e) {
+            if (isYesClicked) return;
+            isYesClicked = true;
+
+            // заморозить кнопку "нет"
+            noButton.style.pointerEvents = 'none';
+            noButton.style.opacity = '0.6';
+            noButton.style.transform = 'none';
+            // убираем котика-настроение, показываем финальный блок
+            const catMoodDiv = document.getElementById('catMood');
+            if (catMoodDiv) catMoodDiv.style.display = 'none';
+
+            // создаём эффект маленьких рыбок / тюленей (лёгкий праздник)
+            createSealConfetti();
+
+            // новое содержание карточки
+            card.innerHTML = `
+                <div class="success-message">
+                    <div class="seal-emoji">🦭🦭🦭</div>
+                    <h2>🎉 Ура! Я зову тебя 26-го в ОКЕАНАРИУМ! 🎉</h2>
+                    <p>💥 БУДУ БИТЬ ТЕБЯ ТЮЛЕНЯМИ 💥</p>
+                    <div class="small-joke">
+                        😈 ты все равно жопа 😈
+                    </div>
+                    <div style="margin-top: 25px; font-size: 1.8rem;">🐟🐠🐡</div>
+                    <div style="margin-top: 20px; font-size: 1.2rem; background:#ffe0c4; display:inline-block; padding:5px 20px; border-radius:40px;">
+                        🐾 Жду не дождусь! 🐾
+                    </div>
+                </div>
+            `;
+            card.style.background = "rgba(253, 244, 227, 0.98)";
+            // добавим внизу карточки котика для прощания? необязательно, но пусть будет
+        });
+
+        // Небольшой конфетти из рыбок/тюленей (вместо сердечек)
+        function createSealConfetti() {
+            const confContainer = document.createElement('div');
+            confContainer.style.position = 'fixed';
+            confContainer.style.top = '0';
+            confContainer.style.left = '0';
+            confContainer.style.width = '100%';
+            confContainer.style.height = '100%';
+            confContainer.style.pointerEvents = 'none';
+            confContainer.style.zIndex = '999';
+            document.body.appendChild(confContainer);
+
+            const items = ['🦭', '🐟', '🐠', '🐡', '🐙', '😼', '🐱'];
+            for (let i = 0; i < 80; i++) {
+                const item = document.createElement('div');
+                item.innerText = items[Math.floor(Math.random() * items.length)];
+                item.style.position = 'absolute';
+                item.style.fontSize = (Math.random() * 26 + 16) + 'px';
+                item.style.left = Math.random() * window.innerWidth + 'px';
+                item.style.top = '-60px';
+                item.style.opacity = Math.random() * 0.8 + 0.4;
+                item.style.animation = `fallSeal ${Math.random() * 2.5 + 1.8}s linear forwards`;
+                item.style.transform = `rotate(${Math.random() * 70 - 35}deg)`;
+                confContainer.appendChild(item);
+            }
+
+            const styleSheet = document.createElement("style");
+            styleSheet.textContent = `
+                @keyframes fallSeal {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+                    100% { transform: translateY(${window.innerHeight + 120}px) rotate(25deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+            setTimeout(() => {
+                confContainer.remove();
+                styleSheet.remove();
+            }, 4200);
+        }
+
+        // ----- События для кнопки "Жопа не хочет" -----
+        noButton.addEventListener('mouseenter', onNoButtonHoverStart);
+        noButton.addEventListener('mouseleave', onNoButtonHoverEnd);
+        noButton.addEventListener('click', onNoButtonClick);
+        noButton.addEventListener('touchstart', function(e) {
+            if (isYesClicked) return;
+            e.preventDefault();
+            setAngryCat();
+            makeNoButtonEscape();
+        });
+
+        // Дополнительно mousedown для предотвращения случайного клика
+        noButton.addEventListener('mousedown', (e) => {
+            if (isYesClicked) return;
+            e.preventDefault();
+            setAngryCat();
+            makeNoButtonEscape();
+        });
+
+        // Ресайз окна: сброс позиции кнопки, чтобы не вылетала за границы
+        window.addEventListener('resize', () => {
+            if (!isYesClicked) {
+                resetNoButtonPosition();
+                setTimeout(() => updateOriginalRect(), 30);
+            }
+        });
+
+        // При загрузке
+        window.addEventListener('load', () => {
+            resetNoButtonPosition();
+            setNiceCat();
+        });
+
+        // Небольшая анимация на кнопку "Да"
+        yesButton.addEventListener('mouseenter', () => {
+            if (!isYesClicked) yesButton.style.transform = 'scale(1.02) translateY(-3px)';
+        });
+        yesButton.addEventListener('mouseleave', () => {
+            if (!isYesClicked) yesButton.style.transform = '';
+        });
+
+        // инициализация
+        resetNoButtonPosition();
+        setNiceCat();
+    })();
+</script>
+</body>
+</html>

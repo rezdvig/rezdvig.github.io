@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Приглашение на свидание 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* чтобы не выделялся текст при кликах */
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ff9a9e 0%, #fad0c4 50%, #fad0c4 100%);
+            font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, 'Poppins', 'Comic Neue', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* плавающие сердечки (декор) */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-bg::before,
+        .heart-bg::after {
+            content: "❤️";
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.2;
+            animation: floatHeart 12s infinite linear;
+        }
+
+        .heart-bg::before {
+            left: 10%;
+            top: 20%;
+            animation-duration: 18s;
+            font-size: 70px;
+        }
+
+        .heart-bg::after {
+            right: 5%;
+            bottom: 15%;
+            animation-duration: 22s;
+            font-size: 60px;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(-40px) rotate(8deg);
+            }
+            100% {
+                transform: translateY(-120px) rotate(12deg);
+                opacity: 0;
+            }
+        }
+
+        /* главная карточка */
+        .invitation-card {
+            background: rgba(255, 250, 240, 0.95);
+            backdrop-filter: blur(2px);
+            border-radius: 72px;
+            padding: 2rem 2rem 3rem;
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2), 0 0 0 8px rgba(255, 215, 215, 0.6);
+            transition: all 0.3s ease;
+            z-index: 10;
+            border: 2px solid #fff9;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #c44569;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 #ffe0e7;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        h1 span {
+            font-size: 3rem;
+        }
+
+        .question {
+            font-size: 2rem;
+            background: #fff0f3;
+            display: inline-block;
+            padding: 0.3rem 1.8rem;
+            border-radius: 100px;
+            margin-top: 8px;
+            margin-bottom: 40px;
+            box-shadow: inset 0 -1px 0 #ffc0cb, 0 6px 12px rgba(0,0,0,0.05);
+            color: #b83b5e;
+        }
+
+        /* контейнер кнопок — для корректного позиционирования убегающей кнопки */
+        .buttons-area {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            min-height: 100px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* базовая стилизация кнопок */
+        .btn {
+            border: none;
+            font-size: 1.6rem;
+            font-weight: bold;
+            padding: 14px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* кнопка ДА */
+        .btn-yes {
+            background: #ff6b81;
+            color: white;
+            text-shadow: 0 1px 2px #b91c3c;
+            border: 2px solid #ffb7c5;
+            transition: 0.2s;
+        }
+
+        .btn-yes:hover {
+            background: #ff4757;
+            transform: scale(1.02) translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+        }
+
+        /* кнопка-отказ — будет динамически двигаться */
+        .btn-no {
+            background: #2f3640;
+            color: #f5f6fa;
+            border: 2px solid #718093;
+            position: relative;
+            transition: transform 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+            will-change: transform;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        /* чтобы нельзя было выделить текст на кнопке */
+        .btn-no:active {
+            transform: translateY(2px);
+        }
+
+        /* эффект для контейнера сообщения после согласия */
+        .success-message {
+            background: #fff0e6;
+            padding: 30px 20px;
+            border-radius: 60px;
+            text-align: center;
+            animation: bouncePop 0.6s ease;
+        }
+
+        .success-message h2 {
+            font-size: 2.3rem;
+            color: #e84393;
+            margin-bottom: 16px;
+        }
+
+        .success-message p {
+            font-size: 1.6rem;
+            color: #6c5ce7;
+        }
+
+        .heart-big {
+            font-size: 4rem;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes bouncePop {
+            0% { transform: scale(0.8); opacity: 0; }
+            80% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* маленькие подсказки и анимация для убегающей кнопки */
+        .footnote {
+            margin-top: 32px;
+            font-size: 0.9rem;
+            color: #c44569;
+            background: #ffeef2;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 40px;
+            opacity: 0.8;
+        }
+
+        /* адаптив */
+        @media (max-width: 550px) {
+            .invitation-card {
+                padding: 1.5rem 1.2rem 2rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .question {
+                font-size: 1.4rem;
+            }
+            .btn {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+            .buttons-area {
+                gap: 20px;
+            }
+            .btn-no {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .buttons-area {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .btn {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="heart-bg"></div>
+
+<div class="invitation-card" id="inviteCard">
+    <h1>
+        💌 Кристиночка! 💌
+    </h1>
+    <div class="question">
+        🤍 Пойдешь на свиданку? 🤍
+    </div>
+
+    <div class="buttons-area" id="buttonsContainer">
+        <button class="btn btn-yes" id="yesBtn">💖 Да, конечно 💖</button>
+        <button class="btn btn-no" id="noBtn">😼 Их виль нихт 😼</button>
+    </div>
+    <div class="footnote">
+        🌸 Только попробуй нажать на 'нет'😾 🌸
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Элементы
+        const yesButton = document.getElementById('yesBtn');
+        const noButton = document.getElementById('noBtn');
+        const card = document.getElementById('inviteCard');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+
+        // ---- Данные для умного убегания, чтобы кнопка не вылетала за экран ----
+        let originalRect = null;         // исходное положение кнопки "нет" без трансформа
+        let windowWidth = window.innerWidth;
+        let windowHeight = window.innerHeight;
+        let isYesClicked = false;         // если уже согласились — блокируем побеги
+
+        // Функция для получения свежих координат кнопки без transform
+        // (важно: мы временно сбрасываем transform, замеряем, возвращаем)
+        function getOriginalBoundingRect() {
+            if (!noButton) return null;
+            // сохраняем текущий трансформ
+            const currentTransform = noButton.style.transform;
+            // убираем трансформ на мгновение, чтобы получить реальное положение в потоке
+            noButton.style.transform = 'none';
+            const rect = noButton.getBoundingClientRect();
+            // восстанавливаем трансформ
+            noButton.style.transform = currentTransform;
+            return rect;
+        }
+
+        // обновить сохранённые оригинальные границы (вызывается при загрузке и ресайзе)
+        function updateOriginalRect() {
+            if (!noButton || isYesClicked) return;
+            // Убедимся, что трансформ сброшен перед замером — но мы его не потеряем
+            const currentTransform = noButton.style.transform;
+            noButton.style.transform = 'none';
+            originalRect = noButton.getBoundingClientRect();
+            noButton.style.transform = currentTransform;
+            
+            windowWidth = window.innerWidth;
+            windowHeight = window.innerHeight;
+        }
+
+        // Генерация безопасного смещения (dx, dy) относительно ИСХОДНОЙ позиции
+        // чтобы кнопка после translate оставалась в видимых пределах экрана + отступы
+        function getSafeTranslation() {
+            if (!originalRect) {
+                updateOriginalRect();
+            }
+            if (!originalRect) return { dx: 0, dy: 0 };
+            
+            // Ширина и высота кнопки
+            const btnWidth = noButton.offsetWidth;
+            const btnHeight = noButton.offsetHeight;
+            
+            // Исходные границы (без transform)
+            const leftOrig = originalRect.left;
+            const rightOrig = originalRect.right;
+            const topOrig = originalRect.top;
+            const bottomOrig = originalRect.bottom;
+            
+            // Допустимые пределы после трансформа:
+            // левая граница >= 8px, правая <= windowWidth - 8px
+            // верхняя >= 8px, нижняя <= windowHeight - 8px
+            const minXOffset = 8 - leftOrig;               // максимальный отрицательный сдвиг влево
+            const maxXOffset = (windowWidth - 8) - rightOrig; // максимальный положительный сдвиг вправо
+            
+            const minYOffset = 8 - topOrig;
+            const maxYOffset = (windowHeight - 8) - bottomOrig;
+            
+            // если окно очень маленькое, диапазон может быть нулевым — дадим хоть немного
+            let rangeXmin = Math.max(-180, minXOffset);
+            let rangeXmax = Math.min(180, maxXOffset);
+            let rangeYmin = Math.max(-120, minYOffset);
+            let rangeYmax = Math.min(120, maxYOffset);
+            
+            // Если диапазон почти нулевой, всё равно дадим возможность немного дёргаться
+            if (rangeXmax - rangeXmin < 20) {
+                rangeXmin = -70;
+                rangeXmax = 70;
+                // дополнительно проверим границы
+                if (rangeXmin + leftOrig < 5) rangeXmin = 5 - leftOrig;
+                if (rangeXmax + rightOrig > windowWidth - 5) rangeXmax = windowWidth - 5 - rightOrig;
+            }
+            if (rangeYmax - rangeYmin < 20) {
+                rangeYmin = -60;
+                rangeYmax = 60;
+                if (rangeYmin + topOrig < 5) rangeYmin = 5 - topOrig;
+                if (rangeYmax + bottomOrig > windowHeight - 5) rangeYmax = windowHeight - 5 - bottomOrig;
+            }
+            
+            // случайный сдвиг в этих пределах
+            let dx = Math.floor(Math.random() * (rangeXmax - rangeXmin + 1) + rangeXmin);
+            let dy = Math.floor(Math.random() * (rangeYmax - rangeYmin + 1) + rangeYmin);
+            
+            // Дополнительный шанс: пусть убегает подальше, но в пределах экрана.
+            // но иногда делает резкий рывок ~80% от макс дистанции
+            if (Math.random() > 0.4) {
+                // сильный рывок в сторону
+                const strongX = (Math.random() > 0.5 ? rangeXmax * 0.8 : rangeXmin * 0.8);
+                const strongY = (Math.random() > 0.5 ? rangeYmax * 0.8 : rangeYmin * 0.8);
+                dx = Math.floor(Math.random() > 0.6 ? strongX : dx);
+                dy = Math.floor(Math.random() > 0.6 ? strongY : dy);
+            }
+            
+            // ограничиваем финально
+            dx = Math.min(rangeXmax, Math.max(rangeXmin, dx));
+            dy = Math.min(rangeYmax, Math.max(rangeYmin, dy));
+            
+            return { dx, dy };
+        }
+        
+        // Функция, которая заставляет кнопку убежать при наведении или попытке клика
+        function makeNoButtonEscape() {
+            if (isYesClicked) return false;   // если уже согласились, не двигаем
+            if (!noButton) return false;
+            
+            // обновим оригинальные границы на всякий случай (т.к. мог измениться размер окна)
+            updateOriginalRect();
+            
+            const { dx, dy } = getSafeTranslation();
+            // применяем плавный трансформ
+            noButton.style.transform = `translate(${dx}px, ${dy}px)`;
+            return true;
+        }
+        
+        // Сброс позиции кнопки "нет" в исходную (не используется часто, но может быть при ресайзе)
+        function resetNoButtonPosition() {
+            if (isYesClicked) return;
+            noButton.style.transform = 'none';
+            // пересчитаем оригинальные координаты после сброса
+            updateOriginalRect();
+        }
+        
+        // Обработчик ресайза окна: пересчитываем исходное положение и корректируем, чтобы кнопка не ушла за границы
+        function onWindowResize() {
+            if (isYesClicked) return;
+            // если трансформ был, сбросим для пересчета границ
+            const hadTransform = noButton.style.transform && noButton.style.transform !== 'none';
+            if (hadTransform) {
+                // временно сбросим, обновим оригинал, потом можно оставить без смещения? 
+                // Чтобы не было глюков - сбросим позицию и оставим в исходном месте (это гуманно)
+                resetNoButtonPosition();
+            } else {
+                updateOriginalRect();
+            }
+        }
+        
+        // ---- Обработчики для кнопки "НЕТ" - наведение и клик ----
+        // Наведение (mouseenter) — убегает
+        noButton.addEventListener('mouseenter', function(e) {
+            if (isYesClicked) return;
+            e.preventDefault();
+            makeNoButtonEscape();
+        });
+        
+        // Также на всякий случай при попытке клика — тоже убегаем и не даём нажать
+        noButton.addEventListener('click', function(e) {
+            if (isYesClicked) return;
+            e.preventDefault();
+            e.stopPropagation();
+            // сделаем рывок с максимальной амплитудой
+            makeNoButtonEscape();
+            // добавим лёгкую вибрацию (если поддерживается) для смеха
+            if (navigator.vibrate) navigator.vibrate(50);
+            // Небольшой визуальный фидбек: меняем текст на секунду
+            const originalText = noButton.innerHTML;
+            noButton.innerHTML = '😹 Не поймаешь! 😹';
+            setTimeout(() => {
+                if (!isYesClicked) noButton.innerHTML = originalText;
+            }, 400);
+            return false;
+        });
+        
+        // Дополнительно: при прикосновении на мобильных (touchstart) тоже убегаем
+        noButton.addEventListener('touchstart', function(e) {
+            if (isYesClicked) return;
+            e.preventDefault();
+            makeNoButtonEscape();
+        });
+        
+        // ---- Обработчик для кнопки "Да, конечно" - радость и приглашение принято ----
+        yesButton.addEventListener('click', function(e) {
+            if (isYesClicked) return;
+            isYesClicked = true;
+            
+            // Отключаем все возможности убегания и клики на "нет"
+            noButton.style.pointerEvents = 'none';
+            noButton.style.opacity = '0.6';
+            noButton.style.transform = 'none';   // возвращаем на место
+            
+            // Создаём эффект взрыва сердечек (необязательно, но приятно)
+            createConfettiHearts();
+            
+            // Меняем содержимое карточки на романтическое сообщение
+            const originalCardContent = card.innerHTML;
+            card.innerHTML = `
+                <div class="success-message">
+                    <div class="heart-big">💞💖💞</div>
+                    <h2>🎉 УРА! Камушек идет на свиданку! 🎉</h2>
+                    <p>✨Я рад, что ты искрене выбрала пойти со мной на свидание. Наверное, ты не ожидала, но мы пойдем играть в боулинг. Если идея не зашла, то держи еще варианты: <br>
+                    💗 Детекстив <br>
+					💗 Развод мостов <br>
+					💗 Кинцо <br>
+					💗 Прогулка в парке <br>
+					💗 Либо просто чилл на диване </p>
+                    <div style="margin-top: 30px; font-size: 2rem;">❤️ 😊 ❤️</div>
+                    <div style="margin-top: 20px; font-size: 1.2rem; background: #ffe0e7; display: inline-block; padding: 6px 20px; border-radius: 50px;">
+                        🌟 Встречаемся завтра! 🌟
+                    </div>
+					<div style="margin-top: 30px; font-size: 1rem;">Ты лучший кумушек!😘</div>
+                </div>
+            `;
+            card.style.background = "rgba(255, 245, 240, 0.98)";
+            
+            // добавить музыку? (не требуется, но можно tiny sound — не обязательно)
+            // просто порадуемся
+        });
+        
+        // Простая конфетти из сердечек (эмуляция радости)
+        function createConfettiHearts() {
+            const confettiContainer = document.createElement('div');
+            confettiContainer.style.position = 'fixed';
+            confettiContainer.style.top = '0';
+            confettiContainer.style.left = '0';
+            confettiContainer.style.width = '100%';
+            confettiContainer.style.height = '100%';
+            confettiContainer.style.pointerEvents = 'none';
+            confettiContainer.style.zIndex = '999';
+            document.body.appendChild(confettiContainer);
+            
+            const hearts = ['❤️', '💖', '💗', '💓', '💕', '💞', '🌸', '✨', '🥰', '😍'];
+            for (let i = 0; i < 120; i++) {
+                const heart = document.createElement('div');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.position = 'absolute';
+                heart.style.fontSize = (Math.random() * 24 + 16) + 'px';
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.top = '-50px';
+                heart.style.opacity = Math.random() * 0.8 + 0.5;
+                heart.style.animation = `fall ${Math.random() * 2 + 2}s linear forwards`;
+                heart.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+                confettiContainer.appendChild(heart);
+                
+                const duration = Math.random() * 2 + 1.5;
+                heart.style.animation = `fall ${duration}s ease-in forwards`;
+            }
+            
+            // Добавим стиль анимации падения
+            const styleSheet = document.createElement("style");
+            styleSheet.textContent = `
+                @keyframes fall {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(${window.innerHeight + 100}px) rotate(20deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+            
+            setTimeout(() => {
+                confettiContainer.remove();
+                styleSheet.remove();
+            }, 4000);
+        }
+        
+        // При загрузке и ресайзе — корректируем оригинальные позиции кнопки
+        window.addEventListener('load', () => {
+            updateOriginalRect();
+            // маленькая хитрость: для надёжности, если кнопка убежала и окно изменилось,
+            // сбрасываем позицию при ресайзе, чтобы не выпадала за экран
+            resetNoButtonPosition();
+        });
+        
+        window.addEventListener('resize', () => {
+            if (!isYesClicked) {
+                resetNoButtonPosition();
+                setTimeout(() => {
+                    updateOriginalRect();
+                }, 50);
+            }
+        });
+        
+        // Дополнительная защита: если всё же навести курсор очень быстро, и кликнуть на кнопку "Нет"
+        // клик уже заблокирован через preventDefault + убегание, но на всякий случай
+        noButton.addEventListener('mousedown', (e) => {
+            if (isYesClicked) return;
+            e.preventDefault();
+            makeNoButtonEscape();
+        });
+        
+        // Также небольшой юмор: при наведении на кнопку "Да" — ничего не убегает, но можно показать подсказку
+        yesButton.addEventListener('mouseenter', () => {
+            if (!isYesClicked) {
+                yesButton.style.transform = 'scale(1.02) translateY(-3px)';
+            }
+        });
+        yesButton.addEventListener('mouseleave', () => {
+            if (!isYesClicked) {
+                yesButton.style.transform = '';
+            }
+        });
+        
+        // Инициализация: убедимся, что кнопка "нет" изначально без трансформа
+        resetNoButtonPosition();
+    })();
+</script>
+</body>
+</html>

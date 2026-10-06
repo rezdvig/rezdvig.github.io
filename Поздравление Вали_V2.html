@@ -119,7 +119,7 @@ h1 .b{display:block;font-size:clamp(64px,24vw,120px);color:var(--accent);text-sh
   function loop(){shoot();timer=setTimeout(loop,500+Math.random()*1100)}
   btn.addEventListener('click',function(){
     var night=document.body.classList.toggle('night');
-    btn.textContent=night?'☀️ Вернуть день':'✨ Включить звёздное небо';
+    btn.textContent=night?'☀️ Вернуть день':'✨ Включить звездопад персеиды';
     clearTimeout(timer);
     if(night&&!reduce){shoot();setTimeout(shoot,300);timer=setTimeout(loop,900)}
     else document.querySelectorAll('.shoot').forEach(function(e){e.remove()});
